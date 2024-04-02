@@ -17,18 +17,33 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var releaseDateLabel: UILabel!
 
     // TODO: Add favorite button outlet
-
+  @IBOutlet weak var favoriteButton: UIButton!
+  
     // TODO: Add favorite button action
-
+  @IBAction func didTapFavoriteButton(_ sender: UIButton) {
+    sender.isSelected = !sender.isSelected
+    
+    if sender.isSelected {
+      movie.addToFavorites()
+    } else {
+      movie.removeFromFavorites()
+    }
+  }
+  
     var movie: Movie!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // TODO: Update favorite button selected state
+      favoriteButton.layer.cornerRadius = favoriteButton.frame.width / 2
 
-
-
+      let favorites = Movie.getMovie(forKey: "Favorites")
+      if favorites.contains(movie) {
+        favoriteButton.isSelected = true
+      } else {
+        favoriteButton.isSelected = false
+      }
 
         // MARK: Style views
         posterImageView.layer.cornerRadius = 20
